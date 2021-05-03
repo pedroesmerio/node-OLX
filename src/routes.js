@@ -3,6 +3,8 @@ const router = express.Router();
 
 //IMPORT MIDDLEWARES
 const Auth = require('./middlewares/Auth');
+//IMPORT VALIDATORS
+const AuthValidator = require('./validators/AuthValidator');
 
 //IMPORT CONTROLLERS
 const AuthController = require('./controllers/AuthController');
@@ -15,8 +17,8 @@ router.get('/ping', (req, res) => {
 
 router.get('/states', Auth.private, UserController.getStates);
 
-router.get('/user/signin', AuthController.signin);
-router.get('/user/signup', AuthController.signup);
+router.post('/user/signin', AuthController.signin);
+router.post('/user/signup', AuthValidator.signup, AuthController.signup);
 
 router.get('/user/me', Auth.private, UserController.info);
 router.put('/user/me', Auth.private, UserController.editAction);
